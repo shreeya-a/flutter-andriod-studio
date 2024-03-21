@@ -4,14 +4,19 @@ class CalculatorButton extends StatelessWidget {
 
   final String label;
   final Color? color;
+  final Function callback;
+  // final VoidCallback callback;
 
 
-  const CalculatorButton({required this.label,  this.color});
+  const CalculatorButton({required this.label, this.color, required this.callback});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: (){},
+      onPressed: (){
+        print('btn pressed');
+        callback(label);
+      },
       child: Text(this.label),
       style: ButtonStyle(
         //btn has many states
