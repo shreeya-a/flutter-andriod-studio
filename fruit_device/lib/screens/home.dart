@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 class Home extends StatelessWidget {
   const Home({super.key});
 
-  getName(){
-    return Future.delayed(Duration(seconds: 5), (){
-      return Future(() => "Shreeya");
-    });
+  getName() async{
+    // 1st para = authoity == domain name
+    // 2nd para = remaining path
+   var url = Uri.https('www.fruityvice.com', '/api/fruit/all');
+   var response = await http.get(url);
+   // print(response.body);
+   if(response.statusCode == 200) {
+     var data = convert.jsonDecode(response.body);
+     print(data);
+   }
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(future: getName(), builder: (context, snapshot){
       if(snapshot.connectionState == ConnectionState.done){
-        return Text('${snapshot.data}');
+        return Text('data aayo ${snapshot.data}');
       }
       else{
         return Center(child: CircularProgressIndicator());
